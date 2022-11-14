@@ -29,5 +29,5 @@ func GetSource() (*src.Client, error) {
 		InsecureSkipVerify: GetSourceInsecureSkipVerify(),
 		Timeout:            60 * time.Second,
 	})
-	return &s, nil
+	return s, nil
 }

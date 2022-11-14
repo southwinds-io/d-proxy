@@ -81,6 +81,16 @@ func whAuth(r http.Request) *h.UserPrincipal {
 				}
 				// if it is not then block the request
 				if !safeListed {
+					log.Printf("WARNING: authentication failed, requester IP '%s' is not safe listed\n", ip)
+					return nil
+				}
+			}
+			// if a referrer URL has been specified
+			if len(info.ReferrerURL) > 0 {
+				// if the referrer in the request does not match the required one
+				if strings.EqualFold(r.Referer(), info.ReferrerURL) {
+					log.Printf("WARNING: authentication failed, referrer URL '%s' does not match required value '%s'\n", r.Referer(), info.ReferrerURL)
+					//  blocks the request
 					return nil
 				}
 			}
@@ -98,5 +108,6 @@ func whAuth(r http.Request) *h.UserPrincipal {
 		}
 	}
 	// otherwise, fail authentication
+	log.Printf("WARNING: authentication failed, invalid token '%s'\n", token)
 	return nil
 }
