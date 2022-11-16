@@ -5,6 +5,6 @@
   to be licensed under the same terms as the rest of the code.
 */
 
-package types
+package core
 
 var Version = "1.0.0"

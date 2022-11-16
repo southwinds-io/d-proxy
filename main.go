@@ -13,7 +13,6 @@ import (
 	"log"
 	"net/http"
 	"southwinds.dev/d-proxy/core"
-	"southwinds.dev/d-proxy/types"
 	h "southwinds.dev/http"
 	"strings"
 	"time"
@@ -25,7 +24,7 @@ var (
 
 func main() {
 	// creates a generic http server
-	s := h.New("doorman-proxy", types.Version)
+	s := h.New("doorman-proxy", core.Version)
 	// add handlers
 	s.Http = func(router *mux.Router) {
 		// add http request login for debugging purposes (using DPROXY_LOGGING env variable)

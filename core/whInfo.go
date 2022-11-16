@@ -11,16 +11,22 @@ import (
 	"southwinds.dev/types/dproxy"
 )
 
-func LoadWebHookInfo() ([]dproxy.WebhookInfo, error) {
+func LoadWebHookInfo() ([]*dproxy.WebhookInfo, error) {
 	source, err := GetSource()
 	if err != nil {
 		return nil, err
 	}
-	result, err := source.Load(dproxy.WebHookInfoType, dproxy.WebHookInfoProto)
+	items, err := source.LoadItemsByType(func() any {
+		return new(dproxy.WebhookInfo)
+	}, dproxy.WebHookInfoType)
 	if err != nil {
 		return nil, err
 	}
-	return result.([]dproxy.WebhookInfo), nil
+	result := make([]*dproxy.WebhookInfo, 0)
+	for _, item := range items {
+		result = append(result, item.(*dproxy.WebhookInfo))
+	}
+	return result, nil
 }
 
 func SetMeta() error {

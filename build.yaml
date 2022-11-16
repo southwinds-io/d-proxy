@@ -1,10 +1,16 @@
 ---
 env:
+  RELEASE_VERSION: 1.0.0
   SRC_URI: http://127.0.0.1:8999
   USER: admin
   PWD: adm1n
 
 functions:
+  - name: package
+    description: creates the app package
+    run:
+      - art run package-linux build
+
   - name: config
     run:
       - art u curl -X PUT ${SRC_URI}/item/WH-TEST -H 'Content-Type:application/json' -H 'Source-Type:DPROXY_WH_INFO' -f webhookInfo.json -C 400 -u ${USER}:${PWD}
